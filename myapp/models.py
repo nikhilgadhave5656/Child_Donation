@@ -21,6 +21,7 @@ class Payment (models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)#who user
     child=models.ForeignKey(Child,on_delete=models.CASCADE)# child specific
     amount=models.DecimalField(max_digits=10,decimal_places=2)
+    # yaha Razorpay ka Payment Link ID (plink_xxx) save karenge
     payment_id=models.CharField(max_length=100, blank=True)
     status = models.CharField(
         max_length=20,

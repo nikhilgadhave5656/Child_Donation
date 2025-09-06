@@ -131,19 +131,30 @@ def create_payment(request, child_id):
 
 
 def payment_success(request):
-    # Razorpay callback se aata hai
-    payment_link_id = request.GET.get('razorpay_payment_link_id')  # link id
-    payment_id = request.GET.get('razorpay_payment_id')            # payment txn id
+    #call back here staus
+    payment_link_id = request.GET.get('razorpay_payment_link_id')   # plink_xxx
+    status = request.GET.get('razorpay_payment_link_status')        # paid / failed / cancelled
 
-    if not payment_link_id or not payment_id:
-        messages.error(request, "Payment not completed or invalid callback.")
+    if not payment_link_id:
+        messages.error(request, "Invalid payment callback.")
         return redirect('home')
 
     try:
+        # DB save link
         payment = Payment.objects.get(payment_id=payment_link_id)
-        payment.status = 'Completed'
+
+        if status == 'paid':
+            payment.status = 'Completed'
+            messages.success(request, "Payment successful ")
+        elif status in ['failed', 'cancelled', 'expired']:
+            payment.status = 'Failed'
+            messages.error(request, "Payment failed ")
+        else:
+            payment.status = 'Pending'
+            messages.warning(request, "Payment is still pending...")
+
         payment.save()
-        messages.success(request, "Payment completed successfully!")
+
     except Payment.DoesNotExist:
         messages.error(request, "Payment record not found.")
 
