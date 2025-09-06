@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Complete Payment for {{ child.name }}</h2>
+    <p>Amount: ₹{{ amount|floatformat:2 }}</p>
+
+    <!-- Display messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Payment form -->
+    <form method="POST" action="{% url 'create_payment_backend' child.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="amount" value="{{ amount }}">
+        <button type="submit" class="btn btn-success btn-lg">Proceed to Payment</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container py-5">
+  <div class="row align-items-center">
+    <div class="col-md-6 mb-4">
+      <img src="{% static 'images/about_us.jpg' %}" class="img-fluid rounded shadow" alt="About Us Image" style="max-height: 350px; object-fit: cover;">
+    </div>
+    <div class="col-md-6">
+      <h2 class="mb-4">Who We Are</h2>
+      <p class="lead">We are a non-profit organization dedicated to uplifting underprivileged children through education, healthcare, and emotional support.</p>
+      <p>Our mission is to create opportunities for every child, regardless of their background, to dream big and achieve those dreams. From sponsoring school fees to providing nutritious meals, we stand with children every step of the way.</p>
+      <a href="/contact" class="btn btn-primary mt-3">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="row mt-5 text-center">
+    <div class="col-md-4">
+      <div class="p-4 border rounded">
+        <h4>100+ Children Helped</h4>
+        <p>Through education and basic resources.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="p-4 border rounded">
+        <h4>50+ Volunteers</h4>
+        <p>Working with love and dedication.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="p-4 border rounded">
+        <h4>10+ Ongoing Projects</h4>
+        <p>Across multiple cities and villages.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

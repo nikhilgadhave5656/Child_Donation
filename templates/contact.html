@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4" style="font-weight: 600; color: #ffffff;">Contact Us</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div style="
+        background: #2c3e50;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        color: white;
+      ">
+        <form method="POST" action="{% url 'contact' %}">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" required 
+              style="border-radius: 8px; background-color: #1e1e2f; color: #fff; border: none;">
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" required 
+              style="border-radius: 8px; background-color: #1e1e2f; color: #fff; border: none;">
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone" name="phone" 
+              style="border-radius: 8px; background-color: #1e1e2f; color: #fff; border: none;">
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Your Message</label>
+            <textarea class="form-control" id="message" name="message" rows="5" required 
+              style="border-radius: 8px; background-color: #1e1e2f; color: #fff; border: none;"></textarea>
+          </div>
+
+          <div class="text-center mt-4">
+            <button type="submit" class="btn btn-outline-light px-4 py-2" style="border-radius: 6px;">
+              Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
