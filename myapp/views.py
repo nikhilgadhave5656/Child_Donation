@@ -6,8 +6,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 import razorpay
 
-# Razorpay client
-client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
 
 
 def index(request):
@@ -82,6 +81,9 @@ def child_detail(request, child_id):
     child = get_object_or_404(Child, pk=child_id)
     return render(request, 'child_detail.html', {'child': child})
 
+# Razorpay client
+client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
 
 def create_payment(request, child_id):
     if not request.user.is_authenticated:
@@ -107,6 +109,7 @@ def create_payment(request, child_id):
             child=child,
             amount=amount,
             status='Pending'
+            
         )
 
         # Create Razorpay Payment Link
@@ -116,7 +119,7 @@ def create_payment(request, child_id):
             "description": f"Sponsorship for {child.name}",
             "customer": {"name": request.user.username, "email": request.user.email},
             "notify": {"sms": True, "email": True},
-            "callback_url": request.build_absolute_uri('/payment-success/'),
+            "callback_url": request.build_absolute_uri('/payment-tracker/'),
             "callback_method": "get"
         })
 
@@ -130,7 +133,7 @@ def create_payment(request, child_id):
     return redirect('child_detail', child_id=child.id)
 
 
-def payment_success(request):
+def payment_tracker(request):
     #call back here staus
     payment_link_id = request.GET.get('razorpay_payment_link_id')   # plink_xxx
     status = request.GET.get('razorpay_payment_link_status')        # paid / failed / cancelled
